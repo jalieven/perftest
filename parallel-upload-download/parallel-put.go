@@ -41,7 +41,7 @@ const defaultMetaSize = 1024
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func RandStringBytes(n int) string {
+func randStringBytes(n int) string {
 	b := make([]byte, n)
 	for i := range b {
 		b[i] = letterBytes[rand.Intn(len(letterBytes))]
@@ -78,9 +78,10 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 	})
 
 	meta := make(map[string]string)
-	for n := 0; n <= metaCount.Value; n++ {
-		var metadataValue = RandStringBytes(1024)
-		meta[fmt.Sprintf("%s-%v", "test-metadata-key", metaCount)] = aws.String(metadataValue)
+	max := make([]int, metaCount)
+	for i := 1; i < max; i++ {
+		var metadataValue = randStringBytes(metaSize)
+		meta[fmt.Sprintf("%s-%v", "test-metadata-key", i)] = aws.String(metadataValue)
 	}
 
 	var err error
