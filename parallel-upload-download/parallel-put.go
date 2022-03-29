@@ -79,7 +79,7 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 
 	meta := make(map[string]string)
 	max := make([]int, metaCount)
-	for i := 1; i < max; i++ {
+	for i := 1; i < len(max); i++ {
 		var metadataValue = randStringBytes(metaSize)
 		meta[fmt.Sprintf("%s-%v", "test-metadata-key", i)] = aws.String(metadataValue)
 	}
