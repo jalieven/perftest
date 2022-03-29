@@ -25,6 +25,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"math/rand"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -78,7 +79,8 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 
 	meta := make(map[string]string)
 	for n := 0; n <= metaCount.Value; n++ {
-		meta[fmt.Sprintf("%s-%v", "test-metadata-key", metaCount)] = aws.String(RandStringBytes(1024))
+		var metadataValue = RandStringBytes(1024)
+		meta[fmt.Sprintf("%s-%v", "test-metadata-key", metaCount)] = aws.String(metadataValue)
 	}
 
 	var err error
@@ -86,7 +88,6 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 		Body:   bytes.NewReader(data),
 		Bucket: aws.String(os.Getenv("BUCKET")),
 		Key:    aws.String(objectName),
-		MetadataDirective: aws.String("REPLACE"),
 		Metadata: meta,
 	})
 
@@ -116,7 +117,7 @@ func main() {
 	var data = bytes.Repeat([]byte("a"), *objectSize)
 
 	start := time.Now().UTC()
-	parallelUploads(objectNames, data, metaCount, metaSize)
+	parallelUploads(objectNames, data, *metaCount, *metaSize)
 
 	totalSize := conc * *objectSize
 	elapsed := time.Since(start)
