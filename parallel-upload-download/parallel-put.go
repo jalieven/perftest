@@ -77,14 +77,15 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 		u.PartSize = 64 * 1024 * 1024 // 64MB per part
 	})
 
-	var meta = make(map[string]*string)
-	var metadataValue string
+	meta := map[string]*string{}
+	var metadataValue string = randStringBytes(metaSize)
 	var key string
-	for i := 1; i < metaCount; i++ {
-		metadataValue = randStringBytes(metaSize)
+	fmt.Println("metaCount", metaCount)
+	for i := 1; i <= metaCount; i++ {
 		key = fmt.Sprintf("%s-%v", "test-metadata-key", i)
 		meta[key] = &metadataValue
 	}
+	fmt.Println("Metadata map:", meta)
 	var err error
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Body:   bytes.NewReader(data),
