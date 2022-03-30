@@ -96,8 +96,7 @@ func main() {
 	parallelDownloads(objectNames)
 	totalSize := conc * 10485760
 	elapsed := time.Since(start)
-	fmt.Println("Elapsed time :", elapsed)
 	seconds := float64(elapsed) / float64(time.Second)
-	fmt.Printf("Speed        : %4.0f objs/sec\n", float64(conc)/seconds)
-	fmt.Printf("Bandwidth    : %4.0f MBit/sec\n", float64(totalSize)/seconds/1024/1024)
+	//fmt.Println("Concurrency;Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec)")
+	fmt.Printf("%s;%s;%f;%f\n", concurrency, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
 }
