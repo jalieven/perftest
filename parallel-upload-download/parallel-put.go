@@ -80,12 +80,10 @@ func uploadBlob(data []byte, objectName string, metaCount int, metaSize int) err
 	meta := map[string]*string{}
 	var metadataValue string = randStringBytes(metaSize)
 	var key string
-	fmt.Println("metaCount", metaCount)
 	for i := 1; i <= metaCount; i++ {
 		key = fmt.Sprintf("%s-%v", "test-metadata-key", i)
 		meta[key] = &metadataValue
 	}
-	fmt.Println("Metadata map:", meta)
 	var err error
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Body:   bytes.NewReader(data),
@@ -124,8 +122,7 @@ func main() {
 
 	totalSize := conc * *objectSize
 	elapsed := time.Since(start)
-	fmt.Println("Elapsed time :", elapsed)
 	seconds := float64(elapsed) / float64(time.Second)
-	fmt.Printf("Speed        : %4.0f objs/sec\n", float64(conc)/seconds)
-	fmt.Printf("Bandwidth    : %4.0f MBit/sec\n", float64(totalSize)/seconds/1024/1024)
+	//fmt.Println("Concurrency;Object Size (bytes);Metadata Entries;Metadata Size (bytes);Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec)")
+	fmt.Printf("%s;%d;%d;%d;%s;%f;%f\n", concurrency, objectSize, metaCount, metaSize, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
 }
