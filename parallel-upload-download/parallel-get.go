@@ -97,6 +97,6 @@ func main() {
 	totalSize := conc * 10485760
 	elapsed := time.Since(start)
 	seconds := float64(elapsed) / float64(time.Second)
-	//fmt.Println("Concurrency;Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec)")
-	fmt.Printf("GET;%s;%s;%f;%f\n", concurrency, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
+	//fmt.Println("Concurrency;Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec);Start Timestamp;End Timestamp")
+	fmt.Printf("GET;%s;%s;%f;%f;%s;%s\n", concurrency, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024, start.Format("2006-01-02T15:04:05.000Z"), time.Now().Format("2006-01-02T15:04:05.000Z"))
 }
