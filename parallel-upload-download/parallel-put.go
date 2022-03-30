@@ -113,7 +113,7 @@ func main() {
 
 	var objectNames []string
 	for i := 0; i < conc; i++ {
-		objectNames = append(objectNames, fmt.Printf("object-%s-%d", nodeNumber, i+1))
+		objectNames = append(objectNames, fmt.Sprintf("object-%s-%d", nodeNumber, i+1))
 	}
 
 	var data = bytes.Repeat([]byte("a"), *objectSize)
