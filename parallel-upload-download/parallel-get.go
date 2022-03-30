@@ -98,5 +98,5 @@ func main() {
 	elapsed := time.Since(start)
 	seconds := float64(elapsed) / float64(time.Second)
 	//fmt.Println("Concurrency;Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec)")
-	fmt.Printf("%s;%s;%f;%f\n", concurrency, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
+	fmt.Printf("GET;%s;%s;%f;%f\n", concurrency, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
 }

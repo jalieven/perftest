@@ -124,5 +124,5 @@ func main() {
 	elapsed := time.Since(start)
 	seconds := float64(elapsed) / float64(time.Second)
 	//fmt.Println("Concurrency;Object Size (bytes);Metadata Entries;Metadata Size (bytes);Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec)")
-	fmt.Printf("%s;%d;%d;%d;%s;%f;%f\n", concurrency, objectSize, metaCount, metaSize, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
+	fmt.Printf("PUT;%s;%d;%d;%d;%s;%f;%f\n", concurrency, objectSize, metaCount, metaSize, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024)
 }
