@@ -105,6 +105,7 @@ func main() {
 	flag.Parse()
 
 	concurrency := os.Getenv("CONCURRENCY")
+	nodeNumber := os.Getenv("NODE")
 	conc, err := strconv.Atoi(concurrency)
 	if err != nil {
 		log.Fatalln(err)
@@ -112,7 +113,7 @@ func main() {
 
 	var objectNames []string
 	for i := 0; i < conc; i++ {
-		objectNames = append(objectNames, fmt.Sprintf("object%d", i+1))
+		objectNames = append(objectNames, fmt.Printf("object-%s-%d", nodeNumber, i+1))
 	}
 
 	var data = bytes.Repeat([]byte("a"), *objectSize)
@@ -123,6 +124,6 @@ func main() {
 	totalSize := conc * *objectSize
 	elapsed := time.Since(start)
 	seconds := float64(elapsed) / float64(time.Second)
-	//fmt.Println("Concurrency;Object Size (bytes);Metadata Entries;Metadata Size (bytes);Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec);Start Timestamp;End Timestamp")
-	fmt.Printf("PUT;%s;%d;%d;%d;%s;%f;%f;%s;%s\n", concurrency, *objectSize, *metaCount, *metaSize, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024, start.Format("2006-01-02T15:04:05.000Z"), time.Now().Format("2006-01-02T15:04:05.000Z"))
+	//fmt.Println("Type;Node Number;Concurrency;Object Size (bytes);Metadata Entries;Metadata Size (bytes);Elapsed Time;Speed (objs/sec);Bandwidth (MBit/sec);Start Timestamp;End Timestamp")
+	fmt.Printf("PUT;%s;%s;%d;%d;%d;%s;%f;%f;%s;%s\n", nodeNumber, concurrency, *objectSize, *metaCount, *metaSize, elapsed, float64(conc)/seconds, float64(totalSize)/seconds/1024/1024, start.Format("2006-01-02T15:04:05.000Z"), time.Now().Format("2006-01-02T15:04:05.000Z"))
 }
